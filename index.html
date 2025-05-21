@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Kiafanny Lanches</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <div class="fundo-estatico">
+    <div class="overlay">
+      <header>
+        <img src="assets/images/logo.png" alt="Kiafanny Lanches" class="logo-kiafanny" />
+        <p class="subtitulo">O melhor lanche da região</p>
+      </header>
+
+      <div class="tela-escolha">
+        <h2 class="titulo-escolha">ESCOLHA SUA CIDADE</h2>
+        <div class="layout-mascote-botoes">
+          <img src="assets/images/mascote.gif" alt="Mascote Kiafanny" class="mascote-apontando" />
+          <div class="botoes-coluna direita">
+            <a href="?cidade=canapi"><img src="assets/images/canapi.png" alt="Canapi" class="botao-img"></a>
+            <a href="?cidade=inhapi"><img src="assets/images/inhapi.png" alt="Inhapi" class="botao-img"></a>
+            <a href="?cidade=mata-grande"><img src="assets/images/mata-grande.png" alt="Mata Grande" class="botao-img"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cardapio" id="cardapio" style="display: none;"></div>
+
+  <div id="carrinho-flutuante" style="display: none;">
+    <button id="finalizar-pedido">Finalizar Pedido (<span id="contador">0</span>)</button>
+  </div>
+
+  <div id="modal-lanche" class="modal">
+    <div class="modal-conteudo">
+      <img id="modal-img" src="" alt="">
+      <h3 id="modal-nome"></h3>
+      <span id="modal-preco" class="price"></span>
+      <p id="modal-desc"></p>
+      <div class="quantidade-control">
+        <button id="menos">−</button>
+        <span id="quantidade">1</span>
+        <button id="mais">+</button>
+      </div>
+      <button id="adicionar-modal">Adicionar ao pedido</button>
+    </div>
+  </div>
+
+  <div id="modal-resumo" class="modal">
+    <div class="modal-resumo-conteudo">
+      <h3>Seu Pedido</h3>
+      <div id="lista-pedido"></div>
+      <p id="total-pedido" class="resumo-total"></p>
+      <button id="enviar-whatsapp" class="enviar-btn">Enviar pelo WhatsApp</button>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+
+</body>
+</html>
