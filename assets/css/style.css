@@ -1,4 +1,4 @@
-/* Estilos base e variáveis */
+  /* Estilos base e variáveis */
 :root {
   --primary-color: #28a745;
   --primary-hover: #218838;
@@ -137,11 +137,12 @@ header {
   justify-content: center;
   width: 100%;
   max-width: 100%;
-  padding: 0 var(--spacing);
+  padding: 0 var(--spacing-sm); /* menos espaço nas laterais */
   box-sizing: border-box;
-  gap: var(--spacing-md);
-  height: 100%; /* Usar toda a altura disponível */
+  gap: 6px; /* reduz distância entre o mascote e os botões */
+  height: 100%;
 }
+
 
 .mascote-apontando {
   width: 45vw; /* Aumentado de 34vw */
