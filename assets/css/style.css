@@ -97,8 +97,8 @@ header {
 }
 
 .logo-kiafanny {
-  max-width: 280px; /* Aumentado de 250px */
-  width: 90%; /* Aumentado de 80% */
+  max-width: 350px; /* Aumentado de 250px */
+  width: 120%; /* Aumentado de 80% */
   margin: var(--spacing-md) auto var(--spacing-xs);
   display: block;
 }
