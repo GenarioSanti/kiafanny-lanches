@@ -1,19 +1,20 @@
-/* ... (mantém as variáveis e resets iniciais como estavam) ... */
-
-/* Ajuste global */
-body, html {
+/* Travar o fundo (sem rolagem no mobile) */
+html, body {
   height: 100%;
-  width: 100%;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Poppins', Arial, sans-serif;
+  color: var(--text-color);
+  line-height: 1.5;
+  -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
-  touch-action: manipulation;
 }
 
-/* Fundo estático travado, mas com altura real do conteúdo */
+/* Garantir altura e fixar visual */
 .fundo-estatico {
-  position: relative;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   background-image: url("../images/fundo.jpg");
   background-size: cover;
   background-position: center;
@@ -21,105 +22,96 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   overflow: hidden;
 }
 
-/* Overlay com espaço justo */
+/* Tela escura com elementos */
 .overlay {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 2;
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing);
+  justify-content: flex-start;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-/* Header */
-header {
-  text-align: center;
-  width: 100%;
-  margin-top: var(--spacing);
-  margin-bottom: 0;
-}
-
+/* Logo */
 .logo-kiafanny {
-  max-width: 300px;
-  width: 95%;
-  margin: 0 auto var(--spacing-xs);
+  max-width: 280px;
+  width: 90%;
+  display: block;
+  margin: 0 auto 8px;
 }
 
+/* Subtítulo - O melhor lanche */
 .subtitulo {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--white);
   text-align: center;
-  margin-top: var(--spacing-xs);
-  margin-bottom: var(--spacing-md);
-  max-width: 95%;
+  margin-bottom: 16px;
 }
 
-/* Nova posição do título "Escolha sua cidade" */
+/* "Escolha sua cidade" */
 .titulo-escolha {
-  text-align: center;
+  font-size: 1.1rem;
   color: var(--white);
-  font-size: 1.2rem; /* Reduzido */
-  font-weight: 600;
-  margin-top: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+  margin: 10px 0 10px;
+  font-weight: bold;
+  text-align: center;
   text-transform: uppercase;
 }
 
-/* Bloco central */
+/* Área dos botões */
 .tela-escolha {
-  width: 100%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1;
-  justify-content: flex-start;
-  padding-bottom: var(--spacing-lg);
+  justify-content: center;
 }
 
 /* Layout mascote + botões */
 .layout-mascote-botoes {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 0 var(--spacing);
-  gap: var(--spacing-md);
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-/* Mascote com ajuste seguro */
+/* Mascote aumentado em 50% com limite */
 .mascote-apontando {
-  width: 60vw;
-  max-width: 220px;
+  width: 52vw; /* aumentado de 34vw → 50% maior */
+  max-width: 200px;
   height: auto;
-  object-fit: contain;
-  border-radius: var(--border-radius);
+  border-radius: 10px;
   z-index: 1;
+  object-fit: contain;
 }
 
-/* Botões visíveis e ao lado */
+/* Coluna de botões */
 .botoes-coluna.direita {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--spacing);
+  gap: 15px;
   z-index: 2;
 }
 
+/* Botões das cidades */
 .botao-img {
-  width: 50vw;
-  max-width: 200px;
+  width: 45vw;
+  max-width: 180px;
   display: block;
   transition: transform 0.2s ease;
-  margin-bottom: var(--spacing-xs);
 }
 
 .botao-img:hover {
@@ -130,19 +122,23 @@ header {
   transform: scale(0.98);
 }
 
-/* Responsivo para telas pequenas */
-@media (max-width: 768px) {
+/* Ajuste geral para celular pequeno */
+@media (max-width: 400px) {
   .mascote-apontando {
-    width: 55vw;
-    max-width: 200px;
+    width: 60vw;
+    max-width: 160px;
   }
 
   .botao-img {
-    width: 45vw;
-    max-width: 180px;
+    width: 42vw;
+    max-width: 160px;
+  }
+
+  .subtitulo {
+    font-size: 1.2rem;
   }
 
   .titulo-escolha {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
