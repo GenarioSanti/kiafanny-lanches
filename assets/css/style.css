@@ -131,17 +131,16 @@ header {
   height: 70vh; /* Garantir altura proporcional */
 }
 
-.layout-mascote-botoes {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 100%;
-  padding: 0 var(--spacing-sm); /* menos espaço nas laterais */
-  box-sizing: border-box;
-  gap: 6px; /* reduz distância entre o mascote e os botões */
-  height: 100%;
+.mascote-apontando {
+  width: 52vw;
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+  z-index: 1;
+  object-fit: contain;
+  margin-bottom: 0 !important; /* zera o espaço abaixo do mascote */
 }
+
 
 
 .mascote-apontando {
