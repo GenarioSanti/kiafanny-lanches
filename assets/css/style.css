@@ -65,7 +65,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centraliza conteúdo verticalmente */
+  justify-content: center; /* Centraliza conteúdo verticalmente para que a logo possa crescer */
   padding: var(--spacing-md); /* Usa variável para padding */
   box-sizing: border-box;
 }
@@ -77,9 +77,10 @@ header {
   width: 100%; /* Garante que o header ocupe a largura total disponível */
 }
 
+/* LOGO MAIOR */
 .logo-kiafanny {
-  max-width: 250px; /* Limite máximo para a logo */
-  width: 60%; /* Ajustado para ser responsivo, mas menor que 180% */
+  max-width: 350px; /* Aumentado o limite máximo para a logo em desktop */
+  width: 90%; /* Mais responsivo e maior em mobile */
   height: auto;
   margin: var(--spacing-md) auto var(--spacing-sm); /* Margens com variáveis */
   display: block;
@@ -116,6 +117,7 @@ header {
   padding: 0 var(--spacing-sm); /* Padding para o conteúdo da tela de escolha */
 }
 
+/* MASCOTE E BOTÕES - LAYOUT PARA MOBILE (COLUNA) */
 .layout-mascote-botoes {
   display: flex;
   flex-direction: column; /* MOBILE: Mascote acima dos botões */
@@ -128,7 +130,7 @@ header {
   gap: var(--spacing-md); /* Espaçamento entre mascote e botões no mobile */
 }
 
-/* Mascote: MAIOR, mas responsivo */
+/* Mascote: MAIOR, mas responsivo (MOBILE) */
 .mascote-apontando {
   width: 65vw; /* Aumentado para o mascote ficar maior em mobile */
   max-width: 200px; /* Limite máximo para o mascote no mobile */
@@ -139,7 +141,7 @@ header {
   display: block; /* Garante que ele se comporte como um bloco para o width */
 }
 
-/* Coluna dos Botões */
+/* Coluna dos Botões (MOBILE) */
 .botoes-coluna.direita {
   display: flex;
   flex-direction: column;
@@ -150,7 +152,7 @@ header {
   width: 100%; /* Ocupa a largura total para centralização */
 }
 
-/* Botões das Cidades: MENORES e responsivos */
+/* Botões das Cidades: MENORES e responsivos (MOBILE) */
 .botao-img {
   width: 70%; /* Diminuído para os botões ficarem um pouco menores */
   max-width: 200px; /* Limite máximo para botões no mobile */
@@ -409,18 +411,19 @@ header {
   }
 }
 
-/* Media Queries para telas maiores (tablets e desktops) */
+/* Media Query para telas maiores (DESKTOP/TABLET) */
 @media (min-width: 768px) {
     .overlay {
-        justify-content: center; /* Centraliza verticalmente o conteúdo do overlay em telas maiores */
+        justify-content: center; /* Centraliza verticalmente o conteúdo do overlay */
         padding: var(--spacing-lg); /* Mais padding em telas grandes */
     }
 
+    /* LAYOUT MASCOTE E BOTÕES: LADO A LADO */
     .layout-mascote-botoes {
-        flex-direction: row; /* Mascote à esquerda, botões à direita */
+        flex-direction: row; /* AGORA SIM: Mascote à esquerda, botões à direita */
         justify-content: center; /* Centraliza o conjunto mascote-botões */
         align-items: center; /* Alinha verticalmente mascote e botões */
-        gap: 50px; /* Aumenta o espaço entre mascote e botões para a sensação de "apontar" */
+        gap: 50px; /* Espaçamento entre mascote e botões */
         max-width: 900px; /* Limita a largura máxima do conjunto */
         padding: 0; /* Remove padding lateral para melhor centralização */
     }
@@ -431,7 +434,7 @@ header {
         max-width: 300px;
     }
 
-    /* Botões em Desktop: Tamanho fixo e maior (mas ainda menor que o mascote) */
+    /* Botões em Desktop: Tamanho fixo e menor (comparado ao mascote) */
     .botoes-coluna.direita {
         align-items: flex-start; /* Alinha os botões à esquerda dentro da sua coluna */
         gap: var(--spacing-lg); /* Espaçamento maior entre os botões */
@@ -439,7 +442,7 @@ header {
     }
 
     .botao-img {
-        width: 250px; /* Tamanho fixo para botões em desktop (menor que o mascote) */
+        width: 250px; /* Tamanho fixo para botões em desktop */
         max-width: 250px;
     }
 
@@ -466,17 +469,17 @@ header {
         margin-bottom: var(--spacing-sm);
     }
     .logo-kiafanny {
-        max-width: 180px;
-        width: 50%;
+        max-width: 250px; /* Aumentado um pouco para landscape */
+        width: 60%;
         margin: var(--spacing-sm) auto var(--spacing-xs);
     }
     .subtitulo, .titulo-escolha {
-        font-size: 1.2rem;
+        font-size: 1rem; /* Reduzido um pouco para caber */
         margin-bottom: var(--spacing-sm);
     }
     .mascote-apontando {
         width: 40vw;
-        max-width: 120px;
+        max-width: 150px; /* Aumentado ligeiramente */
     }
     .botao-img {
         width: 60%;
