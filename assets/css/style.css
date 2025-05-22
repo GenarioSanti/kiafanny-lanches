@@ -77,10 +77,10 @@ header {
   width: 100%; /* Garante que o header ocupe a largura total disponível */
 }
 
-/* LOGO MAIOR (ajustada para ser responsiva e maior) */
+/* LOGO BEM MAIOR (ajustada para ser responsiva e proeminente) */
 .logo-kiafanny {
-  max-width: 450px; /* AUMENTADO O LIMITE MÁXIMO para a logo em desktop */
-  width: 90%; /* Mais responsivo e maior em mobile */
+  max-width: 500px; /* AUMENTADO SIGNIFICATIVAMENTE o limite máximo para a logo */
+  width: 95%; /* Ainda mais responsivo e maior em mobile */
   height: auto;
   margin: var(--spacing-md) auto var(--spacing-sm); /* Margens com variáveis */
   display: block;
@@ -117,7 +117,7 @@ header {
   padding: 0 var(--spacing-sm); /* Padding para o conteúdo da tela de escolha */
 }
 
-/* LAYOUT MASCOTE E BOTÕES - PARA MOBILE (COLUNA - PADRÃO) */
+/* LAYOUT MASCOTE E BOTÕES - PARA MOBILE (COLUNA COM SOBREPOSIÇÃO) */
 .layout-mascote-botoes {
   display: flex;
   flex-direction: column; /* MOBILE: Mascote acima dos botões por padrão */
@@ -127,18 +127,22 @@ header {
   max-width: 100%;
   padding: 0;
   box-sizing: border-box;
-  gap: var(--spacing-md); /* Espaçamento entre mascote e botões no mobile */
+  gap: 0; /* Remove o gap padrão para permitir sobreposição */
+  position: relative; /* Para posicionar elementos filhos relativamente */
 }
 
-/* Mascote: MAIOR, mas responsivo (MOBILE) */
+/* Mascote: MAIOR, mas responsivo e preparado para sobreposição (MOBILE) */
 .mascote-apontando {
-  width: 65vw; /* Aumentado para o mascote ficar maior em mobile */
-  max-width: 220px; /* Limite máximo para o mascote no mobile */
+  width: 70vw; /* Aumentado para o mascote ficar maior em mobile */
+  max-width: 250px; /* Limite máximo para o mascote no mobile */
   height: auto;
   border-radius: var(--border-radius);
-  z-index: 1;
+  z-index: 3; /* Garante que o mascote fique acima dos botões */
   transform: scale(1);
   display: block;
+  /* ADICIONADO: Margem negativa para sobrepor os botões */
+  margin-bottom: -50px; /* Ajuste este valor para controlar a sobreposição */
+  position: relative; /* Necessário para z-index funcionar */
 }
 
 /* Coluna dos Botões (MOBILE) */
@@ -148,14 +152,16 @@ header {
   align-items: center; /* MOBILE: Centraliza os botões individualmente */
   justify-content: center;
   gap: var(--spacing); /* Espaçamento entre os botões */
-  z-index: 2;
+  z-index: 2; /* Garante que os botões fiquem abaixo do mascote */
   width: 100%; /* Ocupa a largura total para centralização */
+  position: relative; /* Necessário para z-index funcionar e para não sair do fluxo */
+  padding-top: 50px; /* Compensa a margem negativa do mascote para ajustar o conteúdo */
 }
 
 /* Botões das Cidades: MENORES e responsivos (MOBILE) */
 .botao-img {
-  width: 70%; /* Diminuído para os botões ficarem um pouco menores */
-  max-width: 200px; /* Limite máximo para botões no mobile */
+  width: 75%; /* Ligeiramente maior para compensar o espaço, mas ainda menor que mascote */
+  max-width: 220px; /* Limite máximo para botões no mobile */
   height: auto;
   display: block;
   transition: transform 0.2s ease;
@@ -418,20 +424,23 @@ header {
         padding: var(--spacing-lg); /* Mais padding em telas grandes */
     }
 
-    /* LAYOUT MASCOTE E BOTÕES: LADO A LADO */
+    /* LAYOUT MASCOTE E BOTÕES: LADO A LADO (SEM SOBREPOSIÇÃO) */
     .layout-mascote-botoes {
-        flex-direction: row; /* AGORA SIM: Mascote à esquerda, botões à direita */
-        justify-content: center; /* Centraliza o conjunto mascote-botões */
+        flex-direction: row; /* Mascote à esquerda, botões à direita */
+        justify-content: center; /* Centraliza o conjunto mascote-botoes */
         align-items: center; /* Alinha verticalmente mascote e botões */
         gap: 50px; /* Espaçamento entre mascote e botões */
         max-width: 900px; /* Limita a largura máxima do conjunto */
-        padding: 0; /* Remove padding lateral para melhor centralização */
+        padding: 0;
+        position: relative; /* Garante que o mascote e botões se comportem bem */
     }
 
     /* Mascote em Desktop: Tamanho fixo e maior */
     .mascote-apontando {
         width: 300px; /* Tamanho fixo maior para o mascote em desktop */
         max-width: 300px;
+        margin-bottom: 0; /* Remove a margem negativa em desktop */
+        position: relative; /* Garante z-index se necessário */
     }
 
     /* Botões em Desktop: Tamanho fixo e menor (comparado ao mascote) */
@@ -439,6 +448,7 @@ header {
         align-items: flex-start; /* Alinha os botões à esquerda dentro da sua coluna */
         gap: var(--spacing-lg); /* Espaçamento maior entre os botões */
         width: auto; /* Ajusta a largura ao conteúdo */
+        padding-top: 0; /* Remove padding extra em desktop */
     }
 
     .botao-img {
@@ -469,7 +479,7 @@ header {
         margin-bottom: var(--spacing-sm);
     }
     .logo-kiafanny {
-        max-width: 300px; /* AUMENTADO um pouco mais para landscape */
+        max-width: 350px; /* AUMENTADO um pouco mais para landscape */
         width: 60%;
         margin: var(--spacing-sm) auto var(--spacing-xs);
     }
@@ -479,7 +489,8 @@ header {
     }
     .mascote-apontando {
         width: 35vw; /* ligeiramente menor para caber melhor */
-        max-width: 150px;
+        max-width: 160px; /* Aumentado ligeiramente para landscape */
+        margin-bottom: -30px; /* Ajuste a sobreposição em landscape se necessário */
     }
     .botao-img {
         width: 60%;
@@ -488,5 +499,9 @@ header {
     .layout-mascote-botoes {
         flex-direction: row; /* Mascote e botões lado a lado em landscape pequeno */
         gap: var(--spacing-sm);
+        /* Remova ou ajuste as margens negativas se não quiser sobreposição em landscape */
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
     }
 }
