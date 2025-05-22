@@ -147,15 +147,15 @@ header {
 }
 
 .mascote-apontando {
-  width: 45vw; /* Aumentado de 34vw */
-  max-width: 180px; /* Aumentado de 120px */
+  width: 52vw;
+  max-width: 200px;
   height: auto;
-  border-radius: var(--border-radius);
+  border-radius: 10px;
   z-index: 1;
-  margin-bottom: var(--spacing);
-  transform: scale(1.5);
-  margin-left: 10px;
+  object-fit: contain;
+  transform: translateX(15px); /* Move para a direita */
 }
+
 
 .botoes-coluna.direita {
   display: flex;
