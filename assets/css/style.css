@@ -154,7 +154,6 @@ header {
   z-index: 1;
   margin-bottom: var(--spacing);
   transform: scale(1.5);
-  transform: translateX(10px);
 }
 
 .botoes-coluna.direita {
