@@ -61,6 +61,20 @@
       <button id="enviar-whatsapp" class="enviar-btn">Enviar pelo WhatsApp</button>
     </div>
   </div>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const cidade = urlParams.get("cidade");
+
+  // Se não tiver cidade escolhida, garante que o cardápio não aparece
+  if (!cidade) {
+    document.getElementById("cardapio").style.display = "none";
+    document.getElementById("carrinho-flutuante").style.display = "none";
+
+    // Fecha modais também se abrirem acidentalmente
+    document.getElementById("modal-lanche").style.display = "none";
+    document.getElementById("modal-resumo").style.display = "none";
+  }
+</script>
 
   <script src="assets/js/app.js"></script>
 
