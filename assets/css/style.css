@@ -1,4 +1,4 @@
-  /* Estilos base e variáveis */
+/* Estilos base e variáveis */
 :root {
   --primary-color: #28a745;
   --primary-hover: #218838;
@@ -97,8 +97,8 @@ header {
 }
 
 .logo-kiafanny {
-  max-width: 350px; /* Aumentado de 250px */
-  width: 120%; /* Aumentado de 80% */
+  max-width: 280px; /* Aumentado de 250px */
+  width: 90%; /* Aumentado de 80% */
   margin: var(--spacing-md) auto var(--spacing-xs);
   display: block;
 }
@@ -131,17 +131,17 @@ header {
   height: 70vh; /* Garantir altura proporcional */
 }
 
-.mascote-apontando {
-  width: 52vw;
-  max-width: 200px;
-  height: auto;
-  border-radius: 10px;
-  z-index: 1;
-  object-fit: contain;
-  margin-bottom: 0 !important; /* zera o espaço abaixo do mascote */
+.layout-mascote-botoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 var(--spacing);
+  box-sizing: border-box;
+  gap: var(--spacing-md);
+  height: 100%; /* Usar toda a altura disponível */
 }
-
-
 
 .mascote-apontando {
   width: 45vw; /* Aumentado de 34vw */
