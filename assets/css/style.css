@@ -62,8 +62,9 @@ button {
 .fundo-estatico {
   position: relative;
   width: 100vw;
-  min-height: 100vh;
-  height: 100vh; /* Garantir altura total */
+  height: 100dvh; /* Usar altura da viewport real */
+  padding-top: env(safe-area-inset-top); /* Adapta para notch */
+  padding-bottom: env(safe-area-inset-bottom);
   background-image: url("../images/fundo.jpg");
   background-size: cover;
   background-position: center;
@@ -71,7 +72,9 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
+
 
 .overlay {
   position: absolute;
