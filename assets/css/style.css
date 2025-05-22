@@ -1,492 +1,297 @@
-/* Estilos base e variáveis */
-:root {
-  --primary-color: #28a745;
-  --primary-hover: #218838;
-  --accent-color: #d35400;
-  --text-color: #333;
-  --light-bg: #f8f8f8;
-  --white: #ffffff;
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.1);
-  --shadow-md: 0 2px 6px rgba(0,0,0,0.2);
-  --shadow-lg: 0 4px 10px rgba(0,0,0,0.3);
-  --border-radius-sm: 6px;
-  --border-radius: 10px;
-  --border-radius-lg: 12px;
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing: 15px;
-  --spacing-md: 20px;
-  --spacing-lg: 30px;
-  --min-touch-size: 44px; /* Tamanho mínimo para área de toque */
-}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+  <title>Kiafanny Lanches</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-/* Reset e estilos globais */
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent; /* Remove o destaque de toque no iOS */
-}
+  <div class="fundo-estatico">
+    <div class="overlay">
+      <header>
+        <img src="assets/images/logo.png" alt="Kiafanny Lanches" class="logo-kiafanny" />
+        <p class="subtitulo">O melhor lanche da região</p>
+      </header>
 
-html {
-  -webkit-overflow-scrolling: touch; /* Melhora a rolagem em iOS */
-  overflow-x: hidden; /* Garante que não haja rolagem horizontal no HTML */
-}
+      <div class="tela-escolha">
+        <h2 class="titulo-escolha">ESCOLHA SUA CIDADE</h2>
+        <div class="layout-mascote-botoes">
+          <img src="assets/images/mascote.gif" alt="Mascote Kiafanny" class="mascote-apontando" />
 
-body {
-  font-family: 'Poppins', Arial, sans-serif; /* Usando Poppins se disponível, senão Arial */
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Impede rolagem lateral, mas permite rolar para baixo */
-  min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
-  display: flex;
-  flex-direction: column;
-}
+          <div class="botoes-coluna direita">
+            <a href="?cidade=canapi">
+              <img src="assets/images/canapi.png" alt="Canapi" class="botao-img">
+            </a>
+            <a href="?cidade=inhapi">
+              <img src="assets/images/inhapi.png" alt="Inhapi" class="botao-img">
+            </a>
+            <a href="?cidade=mata-grande">
+              <img src="assets/images/mata-grande.png" alt="Mata Grande" class="botao-img">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-.fundo-estatico {
-  position: relative;
-  width: 100vw; /* Usa a largura total da viewport */
-  min-height: 100vh; /* Usa a altura total da viewport */
-  background-image: url("../images/fundo.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  <div id="cardapio" class="cardapio" style="display: none;">
+    </div>
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Centraliza conteúdo verticalmente */
-  padding: var(--spacing-md); /* Usa variável para padding */
-  box-sizing: border-box;
-}
+  <div id="carrinho-flutuante" style="display: none;">
+    <button id="finalizar-pedido">
+      Finalizar Pedido (<span id="contador">0</span>)
+    </button>
+  </div>
 
-header {
-  text-align: center;
-  margin-top: var(--spacing);
-  margin-bottom: var(--spacing-md);
-  width: 100%; /* Garante que o header ocupe a largura total disponível */
-}
+  <div id="modal-item" class="modal">
+    <div class="modal-conteudo">
+      <img id="modal-img" src="" alt="Lanche">
+      <h3 id="modal-nome"></h3>
+      <p id="modal-descricao"></p>
+      <div class="quantidade-control">
+        <button id="diminuir-qtd">-</button>
+        <span id="quantidade-item">1</span>
+        <button id="aumentar-qtd">+</button>
+      </div>
+      <p>Preço: <span id="modal-preco"></span></p>
+      <button id="adicionar-modal">Adicionar ao Carrinho</button>
+    </div>
+  </div>
 
-/* LOGO MAIOR (ajustada para ser responsiva e maior) */
-.logo-kiafanny {
-  max-width: 400px; /* Aumentado o limite máximo para a logo */
-  width: 90%; /* Mais responsivo e maior em mobile */
-  height: auto;
-  margin: var(--spacing-md) auto var(--spacing-sm); /* Margens com variáveis */
-  display: block;
-}
+  <div id="modal-resumo" class="modal">
+    <div class="modal-resumo-conteudo">
+      <h2>Seu Pedido</h2>
+      <ul id="lista-pedido">
+        </ul>
+      <p class="resumo-total">Total: <span id="resumo-total-valor">R$ 0,00</span></p>
+      <button id="enviar-whatsapp">Enviar Pedido para WhatsApp</button>
+    </div>
+  </div>
 
-.subtitulo {
-  font-size: 1.1rem;
-  color: var(--white);
-  text-align: center;
-  margin-top: var(--spacing-xs);
-  margin-bottom: var(--spacing-md);
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
+  <script>
+    // Seus scripts JavaScript aqui, sem mudanças.
+    // Garanta que esta parte do script esteja correta e completa.
+    let carrinho = [];
+    const contadorSpan = document.getElementById('contador');
 
-.titulo-escolha {
-  text-align: center;
-  color: var(--white);
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: var(--spacing);
-  text-transform: uppercase;
-  padding: 0 var(--spacing-sm); /* Adiciona padding para evitar que o texto encoste nas bordas */
-}
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const cidade = urlParams.get('cidade');
+      const cardapioElement = document.getElementById('cardapio');
+      const carrinhoFlutuante = document.getElementById('carrinho-flutuante');
 
-.tela-escolha {
-  width: 100%;
-  flex-grow: 1; /* Permite que ocupe o espaço disponível */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Centraliza verticalmente o conteúdo desta seção */
-  padding: 0 var(--spacing-sm); /* Padding para o conteúdo da tela de escolha */
-}
+      if (cidade) {
+        document.querySelector('.fundo-estatico').style.display = "none";
+        cardapioElement.style.display = "grid";
+        carrinhoFlutuante.style.display = "block"; // Mostra o botão do carrinho
 
-/* LAYOUT MASCOTE E BOTÕES - PARA MOBILE (COLUNA - PADRÃO) */
-.layout-mascote-botoes {
-  display: flex;
-  flex-direction: column; /* MOBILE: Mascote acima dos botões por padrão */
-  align-items: center; /* Centraliza mascote e botões horizontalmente */
-  justify-content: center;
-  width: 100%;
-  max-width: 100%;
-  padding: 0;
-  box-sizing: border-box;
-  gap: var(--spacing-md); /* Espaçamento entre mascote e botões no mobile */
-}
+        // Seu array de lanches (mantido como está, apenas um exemplo)
+        const lanches = [
+          ["Hambúrguer", "12,00", "pão, hambúrguer, queijo, presunto e salada", "assets/images/hamburguer.png"],
+          ["Americano", "12,00", "pão, queijo, presunto, ovo, salada, maionese e ketchup", "assets/images/americano.png"],
+          ["X-Burguer", "15,00", "pão, hambúrguer, queijo, ovo, presunto e salada", "assets/images/xburguer.png"],
+          ["X-Calabresa", "20,00", "pão, hambúrguer, queijo, calabresa, presunto e salada", "assets/images/xcalabresa.png"],
+          ["X-Frango", "20,00", "pão, frango desfiado, queijo, presunto e salada", "assets/images/xfrango.png"],
+          ["X-Filé de Frango", "20,00", "pão, filé de frango, queijo, ovo, presunto, salada, maionese e ketchup", "assets/images/xfilefrango.png"],
+          ["X-Bacon", "25,00", "pão, hambúrguer, bacon, queijo, presunto e salada", "assets/images/xbacon.png"],
+          ["Hambúrguer Artesanal", "25,00", "pão, hambúrguer artesanal, cebola, cheddar, mussarela, presunto, ovo", "assets/images/hamburguer_artesanal.png"],
+          ["Pizza Lanche", "30,00", "pão, carne, molho de tomate, mussarela, presunto, milho, ervilha", "assets/images/pizza_lanche.png"],
+          ["Pão com carne do sol", "12,00", "pão, carne do sol, queijo, tomate e cebola", "assets/images/paocarnedelsol.png"],
+          ["Pão de carne de porco", "12,00", "pão, carne de porco desfiada, queijo, tomate e cebola", "assets/images/paocarneporco.png"],
+          ["Cachorro Quente", "8,00", "pão, salsicha, batata palha, molho", "assets/images/cachorroquente.png"],
+          ["Refrigerante Lata", "6,00", "Coca-Cola, Guaraná, Fanta", "assets/images/refri.png"],
+          ["Água Mineral", "4,00", "Água sem gás", "assets/images/agua.png"]
+        ];
 
-/* Mascote: MAIOR, mas responsivo (MOBILE) */
-.mascote-apontando {
-  width: 65vw; /* Aumentado para o mascote ficar maior em mobile */
-  max-width: 220px; /* Limite máximo para o mascote no mobile */
-  height: auto;
-  border-radius: var(--border-radius);
-  z-index: 1;
-  transform: scale(1);
-  display: block;
-}
 
-/* Coluna dos Botões (MOBILE) */
-.botoes-coluna.direita {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* MOBILE: Centraliza os botões individualmente */
-  justify-content: center;
-  gap: var(--spacing); /* Espaçamento entre os botões */
-  z-index: 2;
-  width: 100%; /* Ocupa a largura total para centralização */
-}
+        lanches.forEach(lanche => {
+          const itemDiv = document.createElement('div');
+          itemDiv.classList.add('item');
+          itemDiv.dataset.nome = lanche[0];
+          itemDiv.dataset.preco = lanche[1];
+          itemDiv.dataset.descricao = lanche[2];
+          itemDiv.dataset.imagem = lanche[3];
 
-/* Botões das Cidades: MENORES e responsivos (MOBILE) */
-.botao-img {
-  width: 70%; /* Diminuído para os botões ficarem um pouco menores */
-  max-width: 200px; /* Limite máximo para botões no mobile */
-  height: auto;
-  display: block;
-  transition: transform 0.2s ease;
-}
+          itemDiv.innerHTML = `
+            <img src="${lanche[3]}" alt="${lanche[0]}">
+            <h3>${lanche[0]}</h3>
+            <p>${lanche[2]}</p>
+            <span class="price">R$ ${lanche[1]}</span>
+          `;
+          cardapioElement.appendChild(itemDiv);
+        });
 
-.botao-img:hover {
-  transform: scale(1.05);
-}
+        const modalItem = document.getElementById('modal-item');
+        const modalImg = document.getElementById('modal-img');
+        const modalNome = document.getElementById('modal-nome');
+        const modalDescricao = document.getElementById('modal-descricao');
+        const modalPreco = document.getElementById('modal-preco');
+        const quantidadeItemSpan = document.getElementById('quantidade-item');
+        const diminuirQtdBtn = document.getElementById('diminuir-qtd');
+        const aumentarQtdBtn = document.getElementById('aumentar-qtd');
+        const adicionarModalBtn = document.getElementById('adicionar-modal');
 
-/* CARDAPIO */
-.cardapio {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--spacing);
-  padding: var(--spacing-md);
-  background-color: var(--light-bg);
-  overflow-y: auto;
-  box-sizing: border-box;
-  min-height: calc(100vh - var(--min-touch-size) - var(--spacing-md));
-  flex-grow: 1;
-}
+        let currentItem = {}; // Objeto para armazenar os detalhes do item selecionado
 
-.item {
-  background: var(--white);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  padding: var(--spacing);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
+        cardapioElement.addEventListener('click', e => {
+          const itemDiv = e.target.closest('.item');
+          if (itemDiv) {
+            currentItem = {
+              nome: itemDiv.dataset.nome,
+              preco: itemDiv.dataset.preco,
+              descricao: itemDiv.dataset.descricao,
+              imagem: itemDiv.dataset.imagem,
+              quantidade: 1
+            };
+            modalImg.src = currentItem.imagem;
+            modalNome.textContent = currentItem.nome;
+            modalDescricao.textContent = currentItem.descricao;
+            modalPreco.textContent = `R$ ${currentItem.preco}`;
+            quantidadeItemSpan.textContent = currentItem.quantidade;
+            modalItem.style.display = 'flex';
+          }
+        });
 
-.item img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--border-radius-sm);
-  max-width: 120px;
-  margin-bottom: var(--spacing-sm);
-}
+        diminuirQtdBtn.addEventListener('click', () => {
+          if (currentItem.quantidade > 1) {
+            currentItem.quantidade--;
+            quantidadeItemSpan.textContent = currentItem.quantidade;
+          }
+        });
 
-.item h3 {
-  margin: var(--spacing-sm) 0 var(--spacing-xs);
-  font-size: 1rem;
-  color: var(--text-color);
-}
+        aumentarQtdBtn.addEventListener('click', () => {
+          currentItem.quantidade++;
+          quantidadeItemSpan.textContent = currentItem.quantidade;
+        });
 
-.item p {
-  font-size: 0.75rem;
-  color: #555;
-  margin: 0 0 var(--spacing-sm);
-}
+        adicionarModalBtn.addEventListener('click', () => {
+          for (let i = 0; i < currentItem.quantidade; i++) {
+            carrinho.push({ nome: currentItem.nome, preco: currentItem.preco });
+          }
+          contadorSpan.textContent = carrinho.length;
+          modalItem.style.display = 'none';
+        });
 
-.price {
-  font-weight: bold;
-  color: var(--accent-color);
-  font-size: 0.9rem;
-  margin-top: auto;
-}
+        // Fechar modal ao clicar fora
+        modalItem.addEventListener('click', e => {
+          if (e.target.id === 'modal-item') {
+            modalItem.style.display = 'none';
+          }
+        });
 
-/* BOTÃO FINALIZAR PEDIDO FIXO */
-#carrinho-flutuante {
-  position: fixed;
-  bottom: var(--spacing-md);
-  right: var(--spacing-md);
-  z-index: 9999;
-}
+        // Lógica do modal de resumo do pedido
+        const modalResumo = document.getElementById('modal-resumo');
+        const listaPedido = document.getElementById('lista-pedido');
+        const resumoTotalValor = document.getElementById('resumo-total-valor');
+        const enviarWhatsappBtn = document.getElementById('enviar-whatsapp');
 
-#finalizar-pedido {
-  background-color: var(--primary-color);
-  color: var(--white);
-  border: none;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-height: var(--min-touch-size);
-}
+        document.getElementById('finalizar-pedido').addEventListener('click', () => {
+          if (carrinho.length === 0) {
+            alert("Seu pedido está vazio.");
+            return;
+          }
+          atualizarResumo();
+          modalResumo.style.display = 'flex';
+        });
 
-#finalizar-pedido:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-}
+        function atualizarResumo() {
+          listaPedido.innerHTML = '';
+          let total = 0;
+          const agrupado = {};
 
-/* MODAL GERAL */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-}
+          carrinho.forEach(item => {
+            if (!agrupado[item.nome]) {
+              agrupado[item.nome] = { ...item, qtd: 0 };
+            }
+            agrupado[item.nome].qtd++;
+          });
 
-/* MODAL DO LANCHE */
-.modal-conteudo {
-  background: var(--white);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-lg);
-  width: 90vw;
-  height: auto;
-  max-width: 320px;
-  max-height: 90vh;
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  animation: aparecer 0.2s ease;
-  box-sizing: border-box;
-  overflow-y: auto;
-}
-
-.modal-conteudo img {
-  width: 80%;
-  max-width: 140px;
-  margin: 0 auto var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
-}
-
-.quantidade-control {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing);
-  margin: var(--spacing-sm) 0;
-}
-
-.quantidade-control button {
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background-color: #eee;
-  border-radius: 50%;
-  cursor: pointer;
-  min-width: var(--min-touch-size);
-  min-height: var(--min-touch-size);
-}
-
-.quantidade-control span {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-#adicionar-modal {
-  padding: 10px 20px;
-  background-color: var(--primary-color);
-  border: none;
-  border-radius: var(--border-radius);
-  color: var(--white);
-  font-size: 1rem;
-  cursor: pointer;
-  min-height: var(--min-touch-size);
-}
-
-#adicionar-modal:hover {
-  background-color: var(--primary-hover);
-}
-
-/* MODAL DE RESUMO DO PEDIDO */
-.modal-resumo-conteudo {
-  background: var(--white);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-lg);
-  width: 90%;
-  max-width: 400px;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: var(--shadow-lg);
-  animation: aparecer 0.2s ease;
-  box-sizing: border-box;
-}
-
-#lista-pedido {
-  margin-top: var(--spacing);
-}
-
-.resumo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--spacing-sm);
-  border-bottom: 1px solid #ccc;
-  padding-bottom: var(--spacing-sm);
-}
-
-.resumo-item span {
-  font-weight: bold;
-}
-
-.resumo-controles {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.resumo-controles button {
-  background-color: #eee;
-  border: none;
-  border-radius: var(--border-radius-sm);
-  width: 32px;
-  height: 32px;
-  font-size: 1rem;
-  min-width: var(--min-touch-size);
-  min-height: var(--min-touch-size);
-}
-
-.resumo-total {
-  margin-top: var(--spacing);
-  font-weight: bold;
-  text-align: right;
-  font-size: 1.1rem;
-}
-
-.enviar-btn {
-  margin-top: var(--spacing);
-  width: 100%;
-  padding: 12px;
-  background-color: var(--primary-color);
-  border: none;
-  color: var(--white);
-  font-size: 1rem;
-  border-radius: var(--border-radius);
-  min-height: var(--min-touch-size);
-}
-
-.enviar-btn:hover {
-  background-color: var(--primary-hover);
-}
-
-.enviar-btn:active {
-  transform: scale(0.98);
-}
-
-/* Animações */
-@keyframes aparecer {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Media Query para telas maiores (DESKTOP/TABLET) */
-@media (min-width: 768px) {
-    .overlay {
-        justify-content: center; /* Centraliza verticalmente o conteúdo do overlay */
-        padding: var(--spacing-lg); /* Mais padding em telas grandes */
-    }
-
-    /* LAYOUT MASCOTE E BOTÕES: LADO A LADO */
-    .layout-mascote-botoes {
-        flex-direction: row; /* AGORA SIM: Mascote à esquerda, botões à direita */
-        justify-content: center; /* Centraliza o conjunto mascote-botões */
-        align-items: center; /* Alinha verticalmente mascote e botões */
-        gap: 50px; /* Espaçamento entre mascote e botões */
-        max-width: 900px; /* Limita a largura máxima do conjunto */
-        padding: 0; /* Remove padding lateral para melhor centralização */
-    }
-
-    /* Mascote em Desktop: Tamanho fixo e maior */
-    .mascote-apontando {
-        width: 300px; /* Tamanho fixo maior para o mascote em desktop */
-        max-width: 300px;
-    }
-
-    /* Botões em Desktop: Tamanho fixo e menor (comparado ao mascote) */
-    .botoes-coluna.direita {
-        align-items: flex-start; /* Alinha os botões à esquerda dentro da sua coluna */
-        gap: var(--spacing-lg); /* Espaçamento maior entre os botões */
-        width: auto; /* Ajusta a largura ao conteúdo */
-    }
-
-    .botao-img {
-        width: 250px; /* Tamanho fixo para botões em desktop */
-        max-width: 250px;
-    }
-
-    .cardapio {
-        grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas maiores para o cardápio */
-    }
-
-    /* Ajustes para telas muito grandes */
-    @media (min-width: 1200px) {
-        .layout-mascote-botoes {
-            gap: 80px; /* Ainda mais espaço para telas muito largas */
+          Object.values(agrupado).forEach(item => {
+            const li = document.createElement('li');
+            li.classList.add('resumo-item');
+            const itemTotal = parseFloat(item.preco.replace(",", ".")) * item.qtd;
+            total += itemTotal;
+            li.innerHTML = `
+              <span>${item.nome} x${item.qtd}</span>
+              <div class="resumo-controles">
+                <button onclick="diminuirQtdCarrinho('${item.nome}')">-</button>
+                <span>R$ ${itemTotal.toFixed(2).replace(".", ",")}</span>
+                <button onclick="aumentarQtdCarrinho('${item.nome}')">+</button>
+                <button onclick="removerItemCarrinho('${item.nome}')" style="background-color: #dc3545; color: white;">X</button>
+              </div>
+            `;
+            listaPedido.appendChild(li);
+          });
+          resumoTotalValor.textContent = `R$ ${total.toFixed(2).replace(".", ",")}`;
         }
-    }
-}
 
-/* Ajustes para orientação landscape em dispositivos móveis (telas mais largas que altas) */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-    .overlay {
-        padding: var(--spacing-sm);
-        justify-content: center;
-    }
-    header {
-        margin-top: var(--spacing-sm);
-        margin-bottom: var(--spacing-sm);
-    }
-    .logo-kiafanny {
-        max-width: 280px; /* Aumentado um pouco mais para landscape */
-        width: 60%;
-        margin: var(--spacing-sm) auto var(--spacing-xs);
-    }
-    .subtitulo, .titulo-escolha {
-        font-size: 1rem; /* Reduzido um pouco para caber */
-        margin-bottom: var(--spacing-sm);
-    }
-    .mascote-apontando {
-        width: 35vw; /* ligeiramente menor para caber melhor */
-        max-width: 150px;
-    }
-    .botao-img {
-        width: 60%;
-        max-width: 180px;
-    }
-    .layout-mascote-botoes {
-        flex-direction: row; /* Mascote e botões lado a lado em landscape pequeno */
-        gap: var(--spacing-sm);
-    }
-}
+        function aumentarQtdCarrinho(nome) {
+          const itemIndex = carrinho.findIndex(item => item.nome === nome);
+          if (itemIndex !== -1) {
+            carrinho.push({ nome: carrinho[itemIndex].nome, preco: carrinho[itemIndex].preco });
+            contadorSpan.textContent = carrinho.length;
+            atualizarResumo();
+          }
+        }
+
+        function diminuirQtdCarrinho(nome) {
+          const itemIndex = carrinho.findIndex(item => item.nome === nome);
+          if (itemIndex !== -1) {
+            carrinho.splice(itemIndex, 1);
+            contadorSpan.textContent = carrinho.length;
+            atualizarResumo();
+          }
+        }
+
+        function removerItemCarrinho(nome) {
+          carrinho = carrinho.filter(item => item.nome !== nome);
+          contadorSpan.textContent = carrinho.length;
+          atualizarResumo();
+        }
+
+        modalResumo.addEventListener('click', e => {
+          if (e.target.id === 'modal-resumo') {
+            modalResumo.style.display = 'none';
+          }
+        });
+
+        enviarWhatsappBtn.addEventListener('click', () => {
+          if (carrinho.length === 0) return alert("Seu pedido está vazio.");
+          let texto = "Olá! Quero fazer meu pedido:%0A";
+          let total = 0;
+          const agrupado = {};
+          carrinho.forEach(item => {
+            if (!agrupado[item.nome]) agrupado[item.nome] = { ...item, qtd: 0 };
+            agrupado[item.nome].qtd++;
+          });
+
+          Object.values(agrupado).forEach(item => {
+            texto += `- ${item.nome} x${item.qtd} (R$ ${parseFloat(item.preco.replace(",", ".")).toFixed(2).replace(".", ",")})%0A`;
+            total += parseFloat(item.preco.replace(",", ".")) * item.qtd;
+          });
+
+          texto += `%0ATotal: R$ ${total.toFixed(2).replace(".", ",")}`;
+
+          let numero = '';
+          if (cidade === 'canapi') numero = '5582982062539';
+          if (cidade === 'inhapi') numero = '5582981075609';
+          if (cidade === 'mata-grande') numero = '5582981404413';
+
+          if (numero) {
+            window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
+          } else {
+            alert("Número de telefone não configurado para esta cidade.");
+          }
+        });
+
+      } else {
+        // Se nenhuma cidade for selecionada, o fundo estático e a tela de escolha permanecem visíveis
+      }
+    });
+  </script>
+
+</body>
+</html>
