@@ -65,7 +65,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centraliza conteúdo verticalmente para que a logo possa crescer */
+  justify-content: center; /* Centraliza conteúdo verticalmente */
   padding: var(--spacing-md); /* Usa variável para padding */
   box-sizing: border-box;
 }
@@ -77,9 +77,9 @@ header {
   width: 100%; /* Garante que o header ocupe a largura total disponível */
 }
 
-/* LOGO MAIOR */
+/* LOGO MAIOR (ajustada para ser responsiva e maior) */
 .logo-kiafanny {
-  max-width: 350px; /* Aumentado o limite máximo para a logo em desktop */
+  max-width: 400px; /* Aumentado o limite máximo para a logo */
   width: 90%; /* Mais responsivo e maior em mobile */
   height: auto;
   margin: var(--spacing-md) auto var(--spacing-sm); /* Margens com variáveis */
@@ -117,15 +117,15 @@ header {
   padding: 0 var(--spacing-sm); /* Padding para o conteúdo da tela de escolha */
 }
 
-/* MASCOTE E BOTÕES - LAYOUT PARA MOBILE (COLUNA) */
+/* LAYOUT MASCOTE E BOTÕES - PARA MOBILE (COLUNA - PADRÃO) */
 .layout-mascote-botoes {
   display: flex;
-  flex-direction: column; /* MOBILE: Mascote acima dos botões */
+  flex-direction: column; /* MOBILE: Mascote acima dos botões por padrão */
   align-items: center; /* Centraliza mascote e botões horizontalmente */
   justify-content: center;
   width: 100%;
   max-width: 100%;
-  padding: 0; /* Removido padding lateral aqui, os pais já cuidam */
+  padding: 0;
   box-sizing: border-box;
   gap: var(--spacing-md); /* Espaçamento entre mascote e botões no mobile */
 }
@@ -133,12 +133,12 @@ header {
 /* Mascote: MAIOR, mas responsivo (MOBILE) */
 .mascote-apontando {
   width: 65vw; /* Aumentado para o mascote ficar maior em mobile */
-  max-width: 200px; /* Limite máximo para o mascote no mobile */
+  max-width: 220px; /* Limite máximo para o mascote no mobile */
   height: auto;
   border-radius: var(--border-radius);
   z-index: 1;
   transform: scale(1);
-  display: block; /* Garante que ele se comporte como um bloco para o width */
+  display: block;
 }
 
 /* Coluna dos Botões (MOBILE) */
@@ -156,7 +156,7 @@ header {
 .botao-img {
   width: 70%; /* Diminuído para os botões ficarem um pouco menores */
   max-width: 200px; /* Limite máximo para botões no mobile */
-  height: auto; /* Garante proporção */
+  height: auto;
   display: block;
   transition: transform 0.2s ease;
 }
@@ -168,14 +168,14 @@ header {
 /* CARDAPIO */
 .cardapio {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajusta para telas menores */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: var(--spacing);
   padding: var(--spacing-md);
   background-color: var(--light-bg);
   overflow-y: auto;
   box-sizing: border-box;
-  min-height: calc(100vh - var(--min-touch-size) - var(--spacing-md)); /* Ajusta para a altura da tela menos o botão flutuante */
-  flex-grow: 1; /* Permite que o cardápio ocupe o espaço restante */
+  min-height: calc(100vh - var(--min-touch-size) - var(--spacing-md));
+  flex-grow: 1;
 }
 
 .item {
@@ -188,14 +188,14 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* Espaça o conteúdo do item */
+  justify-content: space-between;
 }
 
 .item img {
   width: 100%;
   height: auto;
   border-radius: var(--border-radius-sm);
-  max-width: 120px; /* Limita o tamanho da imagem do item */
+  max-width: 120px;
   margin-bottom: var(--spacing-sm);
 }
 
@@ -215,7 +215,7 @@ header {
   font-weight: bold;
   color: var(--accent-color);
   font-size: 0.9rem;
-  margin-top: auto; /* Empurra o preço para baixo */
+  margin-top: auto;
 }
 
 /* BOTÃO FINALIZAR PEDIDO FIXO */
@@ -236,7 +236,7 @@ header {
   box-shadow: var(--shadow-md);
   cursor: pointer;
   transition: all 0.3s ease;
-  min-height: var(--min-touch-size); /* Garante tamanho mínimo de toque */
+  min-height: var(--min-touch-size);
 }
 
 #finalizar-pedido:hover {
@@ -263,7 +263,7 @@ header {
   background: var(--white);
   padding: var(--spacing-md);
   border-radius: var(--border-radius-lg);
-  width: 90vw; /* Ajustado para ser mais responsivo no mobile */
+  width: 90vw;
   height: auto;
   max-width: 320px;
   max-height: 90vh;
@@ -274,7 +274,7 @@ header {
   justify-content: center;
   animation: aparecer 0.2s ease;
   box-sizing: border-box;
-  overflow-y: auto; /* Adicionado para permitir rolagem se o conteúdo for muito grande */
+  overflow-y: auto;
 }
 
 .modal-conteudo img {
@@ -300,8 +300,8 @@ header {
   background-color: #eee;
   border-radius: 50%;
   cursor: pointer;
-  min-width: var(--min-touch-size); /* Garante tamanho mínimo de toque */
-  min-height: var(--min-touch-size); /* Garante tamanho mínimo de toque */
+  min-width: var(--min-touch-size);
+  min-height: var(--min-touch-size);
 }
 
 .quantidade-control span {
@@ -317,7 +317,7 @@ header {
   color: var(--white);
   font-size: 1rem;
   cursor: pointer;
-  min-height: var(--min-touch-size); /* Garante tamanho mínimo de toque */
+  min-height: var(--min-touch-size);
 }
 
 #adicionar-modal:hover {
@@ -368,8 +368,8 @@ header {
   width: 32px;
   height: 32px;
   font-size: 1rem;
-  min-width: var(--min-touch-size); /* Garante tamanho mínimo de toque */
-  min-height: var(--min-touch-size); /* Garante tamanho mínimo de toque */
+  min-width: var(--min-touch-size);
+  min-height: var(--min-touch-size);
 }
 
 .resumo-total {
@@ -388,7 +388,7 @@ header {
   color: var(--white);
   font-size: 1rem;
   border-radius: var(--border-radius);
-  min-height: var(--min-touch-size); /* Garante tamanho mínimo de toque */
+  min-height: var(--min-touch-size);
 }
 
 .enviar-btn:hover {
@@ -469,7 +469,7 @@ header {
         margin-bottom: var(--spacing-sm);
     }
     .logo-kiafanny {
-        max-width: 250px; /* Aumentado um pouco para landscape */
+        max-width: 280px; /* Aumentado um pouco mais para landscape */
         width: 60%;
         margin: var(--spacing-sm) auto var(--spacing-xs);
     }
@@ -478,8 +478,8 @@ header {
         margin-bottom: var(--spacing-sm);
     }
     .mascote-apontando {
-        width: 40vw;
-        max-width: 150px; /* Aumentado ligeiramente */
+        width: 35vw; /* ligeiramente menor para caber melhor */
+        max-width: 150px;
     }
     .botao-img {
         width: 60%;
