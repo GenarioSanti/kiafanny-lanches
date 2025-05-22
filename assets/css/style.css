@@ -153,8 +153,10 @@ header {
   border-radius: 10px;
   z-index: 1;
   object-fit: contain;
-  transform: translateX(15px); /* Move para a direita */
+  margin-left: 12px; /* Apenas desloca para a direita */
+  transform: none !important; /* Remove qualquer escala */
 }
+
 
 
 .botoes-coluna.direita {
