@@ -293,10 +293,12 @@ header {
 .item img {
   width: 100%;
   height: auto;
-  max-height: 100px;
-  object-fit: cover;
+  max-height: 85px; /* menor altura */
+  object-fit: contain; /* mostrar a imagem inteira */
   border-radius: var(--border-radius-sm);
+  margin-top: 4px;
 }
+
 
 .item h3 {
   margin: var(--spacing-sm) 0 var(--spacing-xs);
@@ -310,12 +312,13 @@ header {
   font-size: 0.7rem;
   color: #555;
   margin: 0 0 var(--spacing-xs);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  height: 2.1em;
+  line-height: 1.2em;
+  height: auto;
+  display: block;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
+
 
 .price {
   font-weight: bold;
