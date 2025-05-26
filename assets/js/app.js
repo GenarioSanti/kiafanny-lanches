@@ -6,79 +6,15 @@ const carrinhoBtn = document.getElementById('carrinho-flutuante');
 const contadorSpan = document.getElementById('contador');
 let carrinho = [];
 
-// Dados do cardápio
-const lanches = [
-  ["Hambúrguer", "R$ 12,00", "pão, hambúrguer, queijo, presunto e salada"],
-  ["Americano", "R$ 12,00", "pão, queijo, presunto, ovo, salada, maionese e ketchup"],
-  ["X-Burguer", "R$ 15,00", "pão, hambúrguer, queijo, ovo, presunto e salada"],
-  ["X-Calabresa", "R$ 20,00", "pão, hambúrguer, queijo, calabresa, presunto e salada"],
-  ["X-Frango", "R$ 20,00", "pão, frango desfiado, queijo, presunto e salada"],
-  ["X-Filé de Frango", "R$ 20,00", "pão, filé de frango, queijo, ovo, presunto, salada, maionese e ketchup"],
-  ["X-Bacon", "R$ 25,00", "pão, hambúrguer, bacon, queijo, presunto e salada"],
-  ["Hambúrguer Artesanal", "R$ 25,00", "pão, hambúrguer artesanal, cebola, cheddar, mussarela, presunto, ovo e salada"],
-  ["Diferente", "R$ 30,00", "pão, hambúrguer, ovo, frango desfiado, coração de frango, queijo, presunto e salada"],
-  ["X-Calabacon", "R$ 27,00", "pão, hambúrguer, calabresa, bacon, queijo, presunto e salada"],
-  ["X-Frango Bacon", "R$ 28,00", "pão, frango desfiado, bacon, queijo, milho verde e salada"],
-  ["X-Coração de Frango", "R$ 28,00", "pão, coração de frango, queijo, presunto e salada"],
-  ["X-Frango Calabresa", "R$ 28,00", "pão, frango desfiado, calabresa, queijo, milho verde e salada"],
-  ["X-Filé de Carne", "R$ 30,00", "pão, filé de carne, queijo, ovo, presunto e salada"],
-  ["X-Tudo", "R$ 30,00", "pão, hambúrguer, calabresa, bacon, ovo, queijo, presunto e salada"],
-  ["X-Tudão", "R$ 35,00", "pão, hambúrguer, calabresa, bacon, frango, ovo, queijo, presunto e salada"],
-  ["Resenha", "R$ 35,00", "pão, 2 hambúrguer, 2 ovos, 2 queijos, 2 presuntos, bacon e salada"]
-];
-
 // Implementação de lazy loading para imagens
 function lazyLoadImages() {
   if ('loading' in HTMLImageElement.prototype) {
-    // Navegador suporta lazy loading nativo
     const images = document.querySelectorAll('img');
     images.forEach(img => {
       if (!img.hasAttribute('loading')) {
         img.setAttribute('loading', 'lazy');
       }
     });
-  } else {
-    // Fallback para navegadores que não suportam lazy loading nativo
-    // Poderia ser implementado com Intersection Observer
-  }
-}
-
-// Inicialização do cardápio
-function inicializarCardapio() {
-  if (cidade) {
-    document.querySelector('.fundo-estatico').style.display = "none";
-    cardapio.style.display = "grid";
-    carrinhoBtn.style.display = "block";
-
-    // Carregar itens do cardápio com lazy loading
-    lanches.forEach((lanche, index) => {
-      const div = document.createElement('div');
-      div.className = "item";
-      div.setAttribute('role', 'button');
-      div.setAttribute('aria-label', `${lanche[0]} - ${lanche[1]}`);
-      div.setAttribute('tabindex', '0');
-      
-      div.innerHTML = `
-        <img src="assets/images/hamburguer.png" alt="${lanche[0]}" loading="lazy">
-        <h3>${lanche[0]}</h3>
-        <span class="price">${lanche[1]}</span>
-        <p>${lanche[2]}</p>
-      `;
-      
-      // Adicionar eventos de clique e teclado para acessibilidade
-      div.addEventListener('click', () => abrirModal(lanche));
-      div.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          abrirModal(lanche);
-        }
-      });
-      
-      cardapio.appendChild(div);
-    });
-    
-    // Aplicar lazy loading em todas as imagens
-    lazyLoadImages();
   }
 }
 
@@ -89,25 +25,23 @@ function abrirModal(lanche) {
   document.getElementById('modal-preco').textContent = lanche[1];
   document.getElementById('modal-desc').textContent = lanche[2];
   document.getElementById('quantidade').textContent = 1;
-  
+
   const modal = document.getElementById('modal-lanche');
   modal.style.display = 'flex';
-  
-  // Acessibilidade: foco no primeiro elemento interativo do modal
+
   setTimeout(() => {
     document.getElementById('menos').focus();
   }, 100);
-  
-  // Capturar foco dentro do modal (trap focus)
+
   trapFocusInModal(modal);
 }
 
-// Função para manter o foco dentro do modal aberto
+// Trap focus dentro do modal
 function trapFocusInModal(modal) {
   const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
   const firstElement = focusableElements[0];
   const lastElement = focusableElements[focusableElements.length - 1];
-  
+
   modal.addEventListener('keydown', function(e) {
     if (e.key === 'Tab') {
       if (e.shiftKey && document.activeElement === firstElement) {
@@ -123,7 +57,7 @@ function trapFocusInModal(modal) {
   });
 }
 
-// Função para fechar modais
+// Fecha modais
 function fecharModal(modalId) {
   document.getElementById(modalId).style.display = 'none';
 }
@@ -139,14 +73,14 @@ document.getElementById('menos').onclick = () => {
   if (q > 1) document.getElementById('quantidade').textContent = q - 1;
 };
 
-// Eventos para fechar modal ao clicar fora
+// Fecha modal clicando fora
 document.getElementById('modal-lanche').addEventListener('click', e => {
   if (e.target.id === 'modal-lanche') {
     fecharModal('modal-lanche');
   }
 });
 
-// Adicionar ao carrinho
+// Adiciona ao carrinho
 document.getElementById('adicionar-modal').addEventListener('click', () => {
   const nome = document.getElementById('modal-nome').textContent;
   const preco = document.getElementById('modal-preco').textContent;
@@ -156,21 +90,18 @@ document.getElementById('adicionar-modal').addEventListener('click', () => {
     carrinho.push({ nome, preco });
   }
 
-  // Feedback visual e sonoro para usuários
   contadorSpan.textContent = carrinho.length;
   fecharModal('modal-lanche');
-  
-  // Animação do botão de finalizar pedido
+
   const botaoFinalizar = document.getElementById('finalizar-pedido');
   botaoFinalizar.classList.add('pulse');
   setTimeout(() => botaoFinalizar.classList.remove('pulse'), 700);
-  
-  // Feedback para usuários (poderia ser um toast)
+
   const feedback = document.createElement('div');
   feedback.className = 'feedback-toast';
   feedback.textContent = `${qtd}x ${nome} adicionado ao pedido`;
   document.body.appendChild(feedback);
-  
+
   setTimeout(() => {
     feedback.classList.add('show');
     setTimeout(() => {
@@ -186,20 +117,18 @@ document.getElementById('finalizar-pedido').addEventListener('click', () => {
     alert("Você ainda não adicionou nenhum item.");
     return;
   }
-  
+
   atualizarResumo();
   document.getElementById('modal-resumo').style.display = 'flex';
-  
-  // Acessibilidade: foco no primeiro elemento interativo
+
   setTimeout(() => {
     document.getElementById('enviar-whatsapp').focus();
   }, 100);
-  
-  // Trap focus no modal de resumo
+
   trapFocusInModal(document.getElementById('modal-resumo'));
 });
 
-// Atualizar resumo do pedido
+// Atualizar resumo
 function atualizarResumo() {
   const lista = document.getElementById('lista-pedido');
   lista.innerHTML = '';
@@ -232,7 +161,7 @@ function atualizarResumo() {
   document.getElementById('total-pedido').innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
 }
 
-// Alterar quantidade de itens
+// Alterar quantidade
 function alterarQtd(nome, delta) {
   if (delta === 0) return;
 
@@ -243,13 +172,13 @@ function alterarQtd(nome, delta) {
     if (item.nome === nome) qtdAtual++;
   }
 
-  if (delta < 0 && qtdAtual <= 1) return; // não deixa remover o último com botão −
+  if (delta < 0 && qtdAtual <= 1) return;
 
   let contador = 0;
   for (let item of carrinho) {
     if (item.nome === nome) {
       contador++;
-      if (delta < 0 && contador === 1) continue; // remove só 1
+      if (delta < 0 && contador === 1) continue;
       novos.push(item);
     } else {
       novos.push(item);
@@ -267,7 +196,7 @@ function alterarQtd(nome, delta) {
   atualizarResumo();
 }
 
-// Remover item do carrinho
+// Remover item
 function removerItem(nome) {
   carrinho = carrinho.filter(item => item.nome !== nome);
   contadorSpan.textContent = carrinho.length;
@@ -287,11 +216,11 @@ document.getElementById('enviar-whatsapp').addEventListener('click', () => {
     alert("Seu pedido está vazio.");
     return;
   }
-  
+
   let texto = "Olá! Quero fazer meu pedido:%0A";
   let total = 0;
   const agrupado = {};
-  
+
   carrinho.forEach(item => {
     if (!agrupado[item.nome]) agrupado[item.nome] = { ...item, qtd: 0 };
     agrupado[item.nome].qtd++;
@@ -309,23 +238,20 @@ document.getElementById('enviar-whatsapp').addEventListener('click', () => {
   if (cidade === 'inhapi') numero = '5582981075609';
   if (cidade === 'mata-grande') numero = '5582981404413';
 
-  // Abrir WhatsApp em nova aba
   window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
 });
 
-// Adicionar estilos dinâmicos para feedback visual
+// Estilos visuais de feedback
 const style = document.createElement('style');
 style.textContent = `
   .pulse {
     animation: pulse-animation 0.7s ease-in-out;
   }
-  
   @keyframes pulse-animation {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
   }
-  
   .feedback-toast {
     position: fixed;
     bottom: 80px;
@@ -341,12 +267,10 @@ style.textContent = `
     font-weight: 500;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
-  
   .feedback-toast.show {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
-  
   @media (prefers-reduced-motion: reduce) {
     .pulse, .feedback-toast {
       transition: none !important;
@@ -356,12 +280,49 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Inicializar a aplicação quando o DOM estiver pronto
+// Mostrar cardápio e esconder tela inicial ao escolher cidade
 document.addEventListener('DOMContentLoaded', function() {
-  inicializarCardapio();
-  
-  // Expor funções globais necessárias
+  const urlParams = new URLSearchParams(window.location.search);
+  const cidade = urlParams.get('cidade');
+
+  if (cidade) {
+    document.querySelector('.fundo-estatico').style.display = "none";
+    document.getElementById('cardapio').style.display = "grid";
+    document.getElementById('carrinho-flutuante').style.display = "block";
+  }
+
   window.alterarQtd = alterarQtd;
   window.removerItem = removerItem;
   window.fecharModal = fecharModal;
 });
+
+// Ativar modais ao clicar nos itens do cardápio (HTML fixo)
+document.querySelectorAll('.cardapio .item').forEach(item => {
+  const nome = item.querySelector('h3')?.textContent || '';
+  const preco = item.querySelector('.price')?.textContent || '';
+  const descricao = item.querySelector('p')?.textContent || '';
+  const imagem = item.querySelector('img')?.getAttribute('src') || '';
+
+  const dados = [nome, preco, descricao, imagem];
+
+  item.style.cursor = "pointer";
+  item.addEventListener('click', () => abrirModalHTML(dados));
+});
+
+// Função abrir modal (para HTML fixo)
+function abrirModalHTML(lanche) {
+  document.getElementById('modal-img').src = lanche[3];
+  document.getElementById('modal-nome').textContent = lanche[0];
+  document.getElementById('modal-preco').textContent = lanche[1];
+  document.getElementById('modal-desc').textContent = lanche[2];
+  document.getElementById('quantidade').textContent = 1;
+
+  const modal = document.getElementById('modal-lanche');
+  modal.style.display = 'flex';
+
+  setTimeout(() => {
+    document.getElementById('menos').focus();
+  }, 100);
+
+  trapFocusInModal(modal);
+}
